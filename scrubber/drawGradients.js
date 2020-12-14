@@ -1,6 +1,4 @@
 export default function drawGradients(x, y) {
-	canvasContext.clearRect(0, 0, 720, 720);
-
 	let lingrd = canvasContext.createLinearGradient(0, 0, x * 10, y * 10);
 	lingrd.addColorStop(0, "#c32933");
 	lingrd.addColorStop(0.1, "#852e39");
