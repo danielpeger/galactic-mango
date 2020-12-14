@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Experiment</title>
+		<meta property="og:title" content="">
+		<meta name="description" content="">
+		<meta property="og:description" content="">
+		<meta name="author" content="">
+		<meta property="og:image" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body style="position: relative; height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0;" onload="load()">
+		<div style="position:absolute; top: 20px; left:20px;">
+			<div id="playButton" style="cursor:pointer; user-select: none;">▶️</div>
+			<ul style="list-style-type: none; margin: 10px 0 0 0;padding: 0;">
+				<li><strong>Filter</strong></li>
+				<li>
+					<input type="radio" id="none" name="filter" value="none" checked="checked" onchange="setFilter()">
+					<label for="none">None</label>
+				</li>
+				<li>
+					<input type="radio" id="lowpass" name="filter" value="lowpass" onchange="setFilter()">
+					<label for="lowpass">lowpass</label>
+				</li>
+				<li>
+					<input type="radio" id="highpass" name="filter" value="highpass" onchange="setFilter()">
+					<label for="highpass">highpass</label>
+				</li>
+				<li>
+					<input type="radio" id="bandpass" name="filter" value="bandpass" onchange="setFilter()">
+					<label for="bandpass">bandpass</label>
+				</li>
+				<li>
+					<input type="radio" id="lowshelf" name="filter" value="lowshelf" onchange="setFilter()">
+					<label for="lowshelf">lowshelf</label>
+				</li>
+				<li>
+					<input type="radio" id="highshelf" name="filter" value="highshelf" onchange="setFilter()">
+					<label for="highshelf">highshelf</label>
+				</li>
+				<li>
+					<input type="radio" id="peaking" name="filter" value="peaking" onchange="setFilter()">
+					<label for="peaking">peaking</label>
+				</li>
+				<li>
+					<input type="radio" id="notch" name="filter" value="notch" onchange="setFilter()">
+					<label for="notch">notch</label>
+				</li>
+				<li>
+					<input type="radio" id="allpass" name="filter" value="allpass" onchange="setFilter()">
+					<label for="allpass">allpass</label>
+				</li>
+			</ul>
+		</div>
+		<canvas id="canvasElement" width="720" height="720" max-width="100vw" style="max-width: 100vw;"></canvas>
+		<script>
+			const canvas = document.getElementById("canvasElement");
+			const canvasContext = canvas.getContext("2d");
+			canvasContext.globalCompositeOperation = "difference";
+			canvasContext.filter="brightness(140%) saturate(120%)";
+			let canvasX = 0;
+			let canvasY = 0;
+			let mouseX = 360;
+			let mouseY = 360;
+			let radiusAdjustment = 0;
+
+			const shankar = new Audio('https://eager-morse-17da48.netlify.app/cosmicdance.mp3');
+			shankar.crossOrigin = "anonymous";
+			let firstPlay = true;
+			let audioContext = false;
+			let audioData = false;
+			let analyser = false;
+			let source = false;
+			let biquadFilter = false;
+			let iirFilter = false;
+			let feedForward = [0.00020298, 0.0004059599, 0.00020298];
+			let feedBackward = [1.0126964558, -1.9991880801, 0.9873035442];
+
+			function load() {
+				getCanvasPosition();
+				update();
+			}
+		
+			function setupAudioContext() {
+				audioContext = new AudioContext();
+				analyser = audioContext.createAnalyser();
+				analyser.fftSize = 2048;
+				analyser.smoothingTimeConstant = 0.98;
+				source = audioContext.createMediaElementSource(shankar);
+				biquadFilter = audioContext.createBiquadFilter();
+				biquadFilter.frequency.setValueAtTime(mouseX, audioContext.currentTime);
+				biquadFilter.gain.setValueAtTime(mouseX/100, audioContext.currentTime);
+				iirFilter = audioContext.createIIRFilter(feedForward, feedBackward);
+				source.connect(analyser);
+				source.connect(audioContext.destination);
+				audioData = new Uint8Array(analyser.frequencyBinCount);
+			}
+
+			function update() {
+				if (analyser) {
+					analyser.getByteFrequencyData(audioData);
+					audioDatadata = [...audioData];
+					const x = Math.min(Math.max(parseInt(mouseX + (audioDatadata[100] * 2)), 1), 720);
+					const y = Math.min(Math.max(parseInt(mouseY + (audioDatadata[400] * 2)), 1), 720);
+					drawGradients(x,y);
+				}
+
+				requestAnimationFrame(update);
+			}
+
+			function drawGradients(x, y) {
+				canvasContext.clearRect(0, 0, 720, 720);
+
+				let lingrd = canvasContext.createLinearGradient(0, 0, x * 10, y * 10);
+				lingrd.addColorStop(0, "#c32933");
+				lingrd.addColorStop(0.1, "#852e39");
+				lingrd.addColorStop(1, "#852e39");
+				canvasContext.fillStyle = lingrd;
+				canvasContext.fillRect(0, 0, 720, 720);
+			
+				let radgrd = canvasContext.createRadialGradient(360, 360, 0, x, y, 540+radiusAdjustment);
+				radgrd.addColorStop(0, "rgba(110, 38, 30, 1)");
+				radgrd.addColorStop(1, "rgba(113, 84, 58, 1)");
+				canvasContext.fillStyle = radgrd;
+				canvasContext.fillRect(0, 0, 720, 720);
+			}
+
+			function getCanvasPosition() {
+				canvasX = canvas.offsetLeft + canvas.clientLeft;
+				canvasY = canvas.offsetTop + canvas.clientTop;
+			}
+
+			function onMouseMove(e) {
+				mouseX = e.clientX - canvasX;
+				mouseY = e.clientY - canvasY;
+				if(mouseX < 180) {
+					radiusAdjustment = mouseX;
+				}
+
+				biquadFilter.frequency.setValueAtTime(mouseX * 10, audioContext.currentTime);
+				biquadFilter.gain.setValueAtTime(mouseY / 50, audioContext.currentTime);
+				biquadFilter.detune.value = mouseX / mouseY * 1000;
+				biquadfilter.Q.value = 100;
+			}
+
+			function togglePlay() {
+				if(shankar.paused) {
+					shankar.play();
+					document.getElementById("playButton").innerHTML = "⏸";
+					if (firstPlay) {
+						setupAudioContext()
+						firstPlay = false;
+					} else {
+						audioContext.resume();
+					}
+
+				} else {
+					shankar.pause();
+					document.getElementById("playButton").innerHTML = "▶️";
+					audioContext.suspend();
+				}
+			}
+
+			function setFilter() {
+				if(document.getElementById("none").checked) {
+					source.disconnect();
+					source.connect(analyser).connect(audioContext.destination);
+				} else {
+					source.disconnect();
+					biquadFilter.type = document.querySelector(':checked').value;
+					source.connect(biquadFilter).connect(audioContext.destination);
+				}
+			};
+
+			window.addEventListener('resize', getCanvasPosition);
+			canvas.addEventListener("mousemove", onMouseMove, false);
+			document.getElementById("playButton").addEventListener("click", togglePlay, false);
+		</script>
+	</body>
+</html>
