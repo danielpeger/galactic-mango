@@ -6,7 +6,7 @@ let mouseX = 360;
 let mouseY = 360;
 let radiusAdjustment = 0;
 
-const music = new Audio('../shankar.mp3');
+const music = new Audio('../cosmicdance.mp3');
 music.crossOrigin = "anonymous";
 let firstPlay = true;
 let audioContext = false;
@@ -19,5 +19,5 @@ let feedBackward = [1.0126964558, -1.9991880801, 0.9873035442];
 
 let mouseOnScrubber = false;
 
-let pigletStart = 3;
+let pigletStart = 5;
 let pigletEnd = 16;
