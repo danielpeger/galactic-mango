@@ -1,5 +1,3 @@
-let currentTime = 0;
-
 const canvas = document.getElementById("canvasElement");
 const canvasContext = canvas.getContext("2d");
 let canvasX = 0;
@@ -18,3 +16,8 @@ let biquadFilter = false;
 let iirFilter = false;
 let feedForward = [0.00020298, 0.0004059599, 0.00020298];
 let feedBackward = [1.0126964558, -1.9991880801, 0.9873035442];
+
+let mouseOnScrubber = false;
+
+let pigletStart = 3;
+let pigletEnd = 16;
