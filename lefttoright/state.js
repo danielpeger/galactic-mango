@@ -8,3 +8,5 @@ let mouseY = 0;
 let cursorOnScrubber = false;
 
 const music = new Audio('../shankar.mp3');
+
+const backgroundColor = "#106e71";

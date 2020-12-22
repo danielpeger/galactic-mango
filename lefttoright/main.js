@@ -2,6 +2,7 @@ import togglePlay from './togglePlay.js';
 import drawScrubber, { setCursorOnScrubber, scrub } from './scrubber.js';
 
 function setup() {
+	document.body.style.background = backgroundColor;
 	sizeCanvas();
 	update();
 }
@@ -17,7 +18,7 @@ function sizeCanvas() {
 
 function update() {
 	canvasContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
-	canvasContext.fillStyle = "#106e71";
+	canvasContext.fillStyle = backgroundColor;
 	canvasContext.fillRect(0, 0, window.innerWidth, window.innerHeight);
 	drawScrubber();
 	requestAnimationFrame(update);
