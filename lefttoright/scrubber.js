@@ -1,22 +1,14 @@
-const scrubberTop = 20;
-const scrubberSide = 20;
-const scrubberHeight = 6;
+const scrubberTop = 0;
+const scrubberSide = 0;
+const scrubberHeight = window.innerHeight;
 
 export default function drawScrubber() {
-	//Draw scrubber background
-	canvasContext.fillStyle = "rgba(255, 255, 255, 0.2)";
-	canvasContext.fillRect(scrubberSide, scrubberTop, window.innerWidth - 2 * scrubberSide, scrubberHeight);
-
-	//Draw progress bar
-	canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
 	const progress = music.currentTime / music.duration;
-	canvasContext.fillRect(scrubberSide, scrubberTop, (window.innerWidth - 2 * scrubberSide) * progress, scrubberHeight);
-
-	if(cursorOnScrubber) {
-		//Draw hover
-		canvasContext.fillStyle = "rgba(255, 255, 255, 0.2)";
-		canvasContext.fillRect(scrubberSide, scrubberTop, mouseX - scrubberSide, scrubberHeight);
-	}
+	canvasContext.setLineDash([4, 4]);
+	canvasContext.beginPath();
+	canvasContext.moveTo(progress * window.innerWidth, 0);
+	canvasContext.lineTo(progress * window.innerWidth, window.innerHeight);
+	canvasContext.stroke();
 }
 
 export function setCursorOnScrubber(mouseX, mouseY) {

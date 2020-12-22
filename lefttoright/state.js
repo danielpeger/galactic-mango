@@ -9,8 +9,9 @@ let mouseX = 0;
 let mouseY = 0;
 let cursorOnScrubber = false;
 
-const music = new Audio('../shankar.mp3');
+const music = new Audio('../cosmicdance.mp3');
 
 const backgroundColor = "#106366";
 let videoTop = 0;
 let videoHeight = 0;
+let stage = 0;
