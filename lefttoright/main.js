@@ -2,20 +2,23 @@ import togglePlay from './togglePlay.js';
 import drawScrubber, { setCursorOnScrubber, scrub } from './scrubber.js';
 
 function setup() {
-	dpr = window.devicePixelRatio || 1;
 	sizeCanvas();
 	update();
 }
 
 function sizeCanvas() {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	dpr = window.devicePixelRatio || 1;
+	canvas.style.width = window.innerWidth + "px";
+	canvas.style.height = window.innerHeight + "px";
+	canvas.width = window.innerWidth * dpr;
+	canvas.height = window.innerHeight * dpr;
+	canvasContext.scale(dpr, dpr);
 }
 
 function update() {
-	canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+	canvasContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
 	canvasContext.fillStyle = "#106e71";
-	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+	canvasContext.fillRect(0, 0, window.innerWidth, window.innerHeight);
 	drawScrubber();
 	requestAnimationFrame(update);
 }

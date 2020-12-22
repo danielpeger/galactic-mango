@@ -5,12 +5,12 @@ const scrubberHeight = 6;
 export default function drawScrubber() {
 	//Draw scrubber background
 	canvasContext.fillStyle = "rgba(255, 255, 255, 0.2)";
-	canvasContext.fillRect(scrubberSide, scrubberTop, canvas.width - 2 * scrubberSide, scrubberHeight);
+	canvasContext.fillRect(scrubberSide, scrubberTop, window.innerWidth - 2 * scrubberSide, scrubberHeight);
 
 	//Draw progress bar
 	canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
 	const progress = music.currentTime / music.duration;
-	canvasContext.fillRect(scrubberSide, scrubberTop, (canvas.width - 2 * scrubberSide) * progress, scrubberHeight);
+	canvasContext.fillRect(scrubberSide, scrubberTop, (window.innerWidth - 2 * scrubberSide) * progress, scrubberHeight);
 
 	if(cursorOnScrubber) {
 		//Draw hover
@@ -21,7 +21,7 @@ export default function drawScrubber() {
 
 export function setCursorOnScrubber(mouseX, mouseY) {
 	const prevCursorOnScrubber = cursorOnScrubber;
-	cursorOnScrubber = Boolean(mouseY < (2 * scrubberTop + scrubberHeight) && mouseX > scrubberSide && mouseX < (canvas.width - scrubberSide));
+	cursorOnScrubber = Boolean(mouseY < (2 * scrubberTop + scrubberHeight) && mouseX > scrubberSide && mouseX < (window.innerWidth - scrubberSide));
 	if(prevCursorOnScrubber !== cursorOnScrubber) {
 		if(cursorOnScrubber) {
 			canvas.style.cursor = "pointer";
@@ -33,7 +33,7 @@ export function setCursorOnScrubber(mouseX, mouseY) {
 
 export function scrub(clickX, clickY) {
 	if(cursorOnScrubber) {
-		let progress = (clickX - scrubberSide) / (canvas.width - 2 * scrubberSide);
+		let progress = (clickX - scrubberSide) / (window.innerWidth - 2 * scrubberSide);
 		music.currentTime = music.duration * progress;
 	}
 }
