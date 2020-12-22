@@ -14,12 +14,15 @@ function sizeCanvas() {
 	canvas.width = window.innerWidth * dpr;
 	canvas.height = window.innerHeight * dpr;
 	canvasContext.scale(dpr, dpr);
+	videoHeight = (video.offsetHeight - 5) / video.offsetWidth * window.innerWidth
+	videoTop = (window.innerHeight - videoHeight) / 2;
 }
 
 function update() {
 	canvasContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
 	canvasContext.fillStyle = backgroundColor;
 	canvasContext.fillRect(0, 0, window.innerWidth, window.innerHeight);
+	canvasContext.drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight - 5, -3, videoTop, window.innerWidth, videoHeight);
 	drawScrubber();
 	requestAnimationFrame(update);
 }
