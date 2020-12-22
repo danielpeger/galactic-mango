@@ -3,6 +3,7 @@ let dpr = 1;
 const canvas = document.getElementById("canvasElement");
 const canvasContext = canvas.getContext('2d');
 const video = document.getElementById('video');
+const activeVideo = document.getElementById('activeVideo');
 
 let mouseX = 0;
 let mouseY = 0;
