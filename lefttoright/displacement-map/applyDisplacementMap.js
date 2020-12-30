@@ -1,17 +1,10 @@
-let sourceData, mapData, outputData = canvasContext.createImageData(canvasWidth, canvasHeight);
-
 export function setupDisplacementMap() {
-	source.width = map.width = canvasWidth * dpr;
-	source.height = map.height = canvasHeight * dpr;
-	sourceContext.scale(dpr, dpr);
-	mapContext.scale(dpr, dpr);
+	source.width = map.width = canvasWidth;
+	source.height = map.height = canvasHeight;
 
 	sourceData, mapData, outputData = canvasContext.createImageData(canvasWidth, canvasHeight);
-	
-	sourceContext.drawImage(sourceImg, 0, 0);
-	sourceData = sourceContext.getImageData(0, 0, canvasWidth, canvasHeight).data;
 
-	mapContext.drawImage(mapImg, 0, 0);
+	mapContext.drawImage(mapImg, 0, 0, 400, 400, 0, 0, canvasWidth, canvasHeight );
 	mapData = mapContext.getImageData(0, 0, canvasWidth, canvasHeight).data;
 }
 

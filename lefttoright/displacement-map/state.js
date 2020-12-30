@@ -10,12 +10,14 @@ const canvas = document.getElementById("canvasElement"),
 let canvasWidth = 100;
 let canvasHeight = 100;
 
-const driftRange = 100;
+const driftRange = 50;
 
 const source = document.createElement('canvas'),
 			sourceContext = source.getContext('2d'),
 			map = document.createElement('canvas'),
 			mapContext = map.getContext('2d');
+
+let sourceData, mapData, outputData = canvasContext.createImageData(canvasWidth, canvasHeight);
 
 let mouseX = 0;
 let mouseY = 0;
