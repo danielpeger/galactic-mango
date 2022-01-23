@@ -1,6 +1,6 @@
 import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
-import drawScrubber, { drawScrubberHover, drawScrubberDot } from './drawScrubber.js';
+import drawScrubber, { drawScrubberDot } from './drawScrubber.js';
 import {Delaunay} from "https://cdn.skypack.dev/d3-delaunay@6";
 import samples from './samplePath/samples.js';
 import samplesWithLength from './samplePath/samplesWithLength.js';
@@ -19,7 +19,7 @@ function update() {
 		canvasContext.clearRect(0, 0, 720, 720);
 		canvasContext.fillStyle = '#000';
 		canvasContext.fillRect(0, 0, 720, 720);
-		drawScrubber();
+		drawScrubber(pathLength);
 		drawScrubberDot(closestX, closestY);
 	}
 	requestAnimationFrame(update);
@@ -47,6 +47,7 @@ function onCanvasClick(e) {
 	let clickY = e.clientY - canvasY;
 
 	const progress = closestLength / pathLength;
+	console.log(progress);
 	music.currentTime = music.duration * progress; 
 }
 
