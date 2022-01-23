@@ -1,8 +1,6 @@
 import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
-import drawGradients from './drawGradients.js';
 import drawScrubber, { drawScrubberHover } from './drawScrubber.js';
-import drawPiglet from './drawPiglet.js';
 
 function load() {
 	getCanvasPosition();
@@ -12,12 +10,9 @@ function load() {
 function update() {
 	if (audioContext) {
 		canvasContext.clearRect(0, 0, 720, 720);
-		drawGradients(mouseX,mouseY);
+		canvasContext.fillStyle = '#000';
+		canvasContext.fillRect(0, 0, 720, 720);
 		drawScrubber();
-		const pigletDuration = pigletStart - pigletEnd;
-		const pigletCurrent = Math.min(Math.max((music.currentTime), pigletStart), pigletEnd);
-		const pigletProgress = Math.abs((pigletCurrent - pigletStart) / pigletDuration);
-		drawPiglet(pigletProgress);
 		if(mouseOnScrubber) {
 			drawScrubberHover()
 		}
@@ -28,17 +23,10 @@ function update() {
 function onMouseMove(e) {
 	mouseX = e.clientX - canvasX;
 	mouseY = e.clientY - canvasY;
-	// mouseOnScrubber = Boolean(mouseY < 40 && mouseX > 20 && mouseX < 700);
 	mouseOnScrubber = canvasContext.isPointInStroke(scrubberPath, mouseX, mouseY);
 
 	if(mouseX < 180) {
 		radiusAdjustment = mouseX;
-	}
-
-	if (biquadFilter) {
-		biquadFilter.frequency.setValueAtTime(mouseX * 10, audioContext.currentTime);
-		biquadFilter.gain.setValueAtTime(mouseY / 50, audioContext.currentTime);
-		biquadFilter.detune.value = mouseX / mouseY * 1000;
 	}
 
 	if(mouseOnScrubber) {

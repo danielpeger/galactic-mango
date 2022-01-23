@@ -4,7 +4,6 @@ let canvasX = 0;
 let canvasY = 0;
 let mouseX = 360;
 let mouseY = 360;
-let radiusAdjustment = 0;
 
 const music = new Audio('../cosmicdance.mp3');
 music.crossOrigin = "anonymous";
@@ -12,10 +11,6 @@ let firstPlay = true;
 let audioContext = false;
 let audioData = false;
 let source = false;
-let biquadFilter = false;
-let iirFilter = false;
-let feedForward = [0.00020298, 0.0004059599, 0.00020298];
-let feedBackward = [1.0126964558, -1.9991880801, 0.9873035442];
 
 let mouseOnScrubber = false;
 
@@ -27,7 +22,3 @@ const scrubberProperties = new svgPathProperties.svgPathProperties(pathData);
 console.log(scrubberProperties.getPointAtLength(700))
 const scrubberLength = scrubberProperties.getTotalLength();
 const scrubberPath = new Path2D(pathData);
-// scrubberPath.moveTo(0,28)
-// scrubberPath.bezierCurveTo(0,28,31,7,70,8);
-// scrubberPath.bezierCurveTo(109,9,313,99,425,90);
-// scrubberPath.bezierCurveTo(516,82.5,536,55,536,55);

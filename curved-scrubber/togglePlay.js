@@ -19,11 +19,5 @@ export default function togglePlay() {
 function setupAudioContext() {
 	audioContext = new AudioContext();
 	source = audioContext.createMediaElementSource(music);
-	biquadFilter = audioContext.createBiquadFilter();
-	biquadFilter.type = 'lowpass';
-	biquadFilter.Q.value = 20;
-	biquadFilter.frequency.setValueAtTime(mouseX, audioContext.currentTime);
-	biquadFilter.gain.setValueAtTime(mouseX/100, audioContext.currentTime);
-	iirFilter = audioContext.createIIRFilter(feedForward, feedBackward);
-	source.connect(biquadFilter).connect(audioContext.destination);
+	source.connect(audioContext.destination);
 }
