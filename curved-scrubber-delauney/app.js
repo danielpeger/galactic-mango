@@ -1,6 +1,5 @@
 import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
-import searchPathMap from './searchPathMap.js';
 import drawScrubber, { drawScrubberHover } from './drawScrubber.js';
 
 function load() {
