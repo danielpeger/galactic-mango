@@ -25,10 +25,6 @@ function onMouseMove(e) {
 	mouseY = e.clientY - canvasY;
 	mouseOnScrubber = canvasContext.isPointInStroke(scrubberPath, mouseX, mouseY);
 
-	if(mouseX < 180) {
-		radiusAdjustment = mouseX;
-	}
-
 	if(mouseOnScrubber) {
 		canvas.style.cursor = "pointer";
 	} else {
