@@ -59,3 +59,4 @@ document.addEventListener('keyup', event => {
     togglePlay();
   }
 })
+playButton.addEventListener("click", togglePlay, false);

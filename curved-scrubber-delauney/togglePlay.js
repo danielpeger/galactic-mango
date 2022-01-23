@@ -1,7 +1,7 @@
 export default function togglePlay() {
 	if(music.paused) {
 		music.play();
-		document.getElementById("playButton").innerHTML = "⏸ Press space to pause";
+		playButton.innerHTML = "⏸ Press space to pause";
 		if (firstPlay) {
 			setupAudioContext()
 			firstPlay = false;
@@ -11,7 +11,7 @@ export default function togglePlay() {
 
 	} else {
 		music.pause();
-		document.getElementById("playButton").innerHTML = "▶️ Press space to play";
+		playButton.innerHTML = "▶️ Press space to play";
 		audioContext.suspend();
 	}
 }

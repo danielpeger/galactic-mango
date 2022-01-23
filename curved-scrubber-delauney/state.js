@@ -5,6 +5,7 @@ let canvasY = 0;
 let mouseX = 360;
 let mouseY = 360;
 
+const playButton = document.getElementById("playButton");
 const music = new Audio('../cosmicdance.mp3');
 music.crossOrigin = "anonymous";
 let firstPlay = true;
