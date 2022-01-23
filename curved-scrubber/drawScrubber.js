@@ -6,12 +6,13 @@ export default function drawScrubber() {
 	canvasContext.lineDashOffset = scrubberLength - (progress * scrubberLength);
 	canvasContext.stroke(scrubberPath);
 
-	canvasContext.strokeStyle = "rgba(255, 255, 255, 0.2)";
+	canvasContext.strokeStyle = "rgba(255, 255, 255, 0.35)";
 	canvasContext.lineDashOffset = 0;
 	canvasContext.stroke(scrubberPath);
 }
 
-export function drawScrubberHover() {
-	// canvasContext.fillStyle = "rgba(255, 255, 255, 0.2)";
-	// canvasContext.fillRect(20, 20, mouseX-20, 8);
+export function drawScrubberHover(length) {
+	canvasContext.strokeStyle = "rgba(255, 255, 255, 0.35)";
+	canvasContext.lineDashOffset = scrubberLength - length;
+	canvasContext.stroke(scrubberPath);
 }

@@ -1,5 +1,6 @@
 import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
+import searchPathMap from './searchPathMap.js';
 import drawScrubber, { drawScrubberHover } from './drawScrubber.js';
 
 function load() {
@@ -14,7 +15,10 @@ function update() {
 		canvasContext.fillRect(0, 0, 720, 720);
 		drawScrubber();
 		if(mouseOnScrubber) {
-			drawScrubberHover()
+			const position = searchPathMap(mouseX, mouseY);
+			if (position) {
+				drawScrubberHover(position)
+			}
 		}
 	}
 	requestAnimationFrame(update);
@@ -27,6 +31,7 @@ function onMouseMove(e) {
 
 	if(mouseOnScrubber) {
 		canvas.style.cursor = "pointer";
+		// console.log({x: mouseX, y: mouseY, len: searchPathMap(mouseX, mouseY)})
 	} else {
 		canvas.style.cursor = "default";
 	}
@@ -37,8 +42,11 @@ function onCanvasClick(e) {
 	let clickY = e.clientY - canvasY;
 
 	if(mouseOnScrubber) {
-		let progress = (clickX - 20) / 680;
-		music.currentTime = music.duration * progress;
+		const position = searchPathMap(mouseX, mouseY);
+		if (position) {
+			const progress = position / scrubberLength;
+			music.currentTime = music.duration * progress;
+		}
 	}
 }
 
