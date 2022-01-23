@@ -1,6 +1,10 @@
 import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
 import drawScrubber, { drawScrubberHover } from './drawScrubber.js';
+import {Delaunay} from "https://cdn.skypack.dev/d3-delaunay@6";
+
+const points = [[474,276],[586,393],[378,388],[338,323],[341,138],[547,252],[589,148],[346,227],[365,108],[562,62]];
+const delaunay = Delaunay.from(points);
 
 function load() {
 	getCanvasPosition();
@@ -24,6 +28,9 @@ function onMouseMove(e) {
 	mouseX = e.clientX - canvasX;
 	mouseY = e.clientY - canvasY;
 	mouseOnScrubber = canvasContext.isPointInStroke(scrubberPath, mouseX, mouseY);
+
+	const result = delaunay.find(mouseX, mouseY);
+	console.log(result);
 
 	if(mouseOnScrubber) {
 		canvas.style.cursor = "pointer";
