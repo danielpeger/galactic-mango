@@ -16,5 +16,5 @@ for (let i = 0; i < pathLength; i += precision) {
   samplesWithLength = [...samplesWithLength, [samplePoint.x, samplePoint.y, i]]
 }
 
-fs.writeFileSync("samples.json", JSON.stringify(samples));
-fs.writeFileSync("samplesWithLength.json", JSON.stringify(samplesWithLength));
+fs.writeFileSync("samples.js", `export default ${JSON.stringify(samples)}`);
+fs.writeFileSync("samplesWithLength.js", `export default ${JSON.stringify(samplesWithLength)}`);

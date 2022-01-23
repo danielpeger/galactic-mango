@@ -2,8 +2,8 @@ import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
 import drawScrubber, { drawScrubberHover, drawScrubberDot } from './drawScrubber.js';
 import {Delaunay} from "https://cdn.skypack.dev/d3-delaunay@6";
-import samples from './samplePath/samples.json' assert { type: "json" };
-import samplesWithLength from './samplePath/samplesWithLength.json' assert { type: "json" };
+import samples from './samplePath/samples.js';
+import samplesWithLength from './samplePath/samplesWithLength.js';
 
 const delaunay = Delaunay.from(samples);
 const pathLength = samplesWithLength[samplesWithLength.length - 1][2];
