@@ -1,5 +1,6 @@
 export default function drawScrubber() {
 	const progress = music.currentTime / music.duration;
+	canvasContext.lineWidth = 20;
 	canvasContext.setLineDash([scrubberLength]);
 
 	canvasContext.strokeStyle = "rgba(255, 255, 255, 1)";

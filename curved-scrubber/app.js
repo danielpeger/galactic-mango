@@ -15,10 +15,10 @@ function update() {
 		canvasContext.fillRect(0, 0, 720, 720);
 		drawScrubber();
 		if(mouseOnScrubber) {
-			const position = searchPathMap(mouseX, mouseY);
-			if (position) {
-				drawScrubberHover(position)
-			}
+			// const position = searchPathMap(mouseX, mouseY);
+			// if (position) {
+			// 	drawScrubberHover(position)
+			// }
 		}
 	}
 	requestAnimationFrame(update);

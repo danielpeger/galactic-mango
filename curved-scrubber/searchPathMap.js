@@ -13,9 +13,10 @@ function binarySearchX(value, array) {
   let start = 0;
   let end = array.length - 1;
 	let result = [];
+  let middle = Math.floor((start + end) / 2);
 
   while (start <= end) {
-    let middle = Math.floor((start + end) / 2);
+    middle = Math.floor((start + end) / 2);
 
     if (array[middle].x === value) {
       return middle;
@@ -25,5 +26,5 @@ function binarySearchX(value, array) {
       end = middle - 1;
     }
   }
-  return -1;
+  return middle;
 }
