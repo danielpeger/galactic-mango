@@ -1,0 +1,24 @@
+export default function drawScrubber() {
+	// canvasContext.fillStyle = "rgba(255, 255, 255, 0.2)";
+	// canvasContext.fillRect(20, 20, 680, 8);
+	// canvasContext.fillStyle = "rgba(255, 255, 255, 1)";
+	// canvasContext.fillRect(20, 20, 680 * progress, 8);
+	const progress = music.currentTime / music.duration;
+	canvasContext.lineWidth = 14;
+	canvasContext.setLineDash([scrubberLength]);
+
+	canvasContext.strokeStyle = "rgba(255, 255, 255, 1)";
+	canvasContext.lineDashOffset = scrubberLength - (progress * scrubberLength);
+	canvasContext.stroke(scrubberPath);
+
+	canvasContext.strokeStyle = "rgba(255, 255, 255, 0.2)";
+	canvasContext.lineDashOffset = 0;
+	canvasContext.stroke(scrubberPath);
+
+
+}
+
+export function drawScrubberHover() {
+	// canvasContext.fillStyle = "rgba(255, 255, 255, 0.2)";
+	// canvasContext.fillRect(20, 20, mouseX-20, 8);
+}
