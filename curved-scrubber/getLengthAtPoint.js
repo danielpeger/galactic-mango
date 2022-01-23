@@ -1,6 +1,6 @@
 import map from './mapPath/map.json' assert { type: "json" };
 
-export default function searchPathMap(x, y) {
+export default function getLengthAtPoint(x, y) {
   const groupIndex = binarySearchX(x, map[y]);
   if (map[y][groupIndex]) {
     return map[y][groupIndex].len;

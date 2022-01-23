@@ -17,3 +17,10 @@ export function drawScrubberHover(length) {
 	canvasContext.lineDashOffset = scrubberLength - length;
 	canvasContext.stroke(scrubberPath);
 }
+
+export function drawScrubberDot(x, y) {
+	canvasContext.beginPath();
+	canvasContext.arc(x, y, 6, 0, 2 * Math.PI, false);
+	canvasContext.fillStyle = 'red';
+	canvasContext.fill();
+}
