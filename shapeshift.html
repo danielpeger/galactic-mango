@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Shapeshifter</title>
+		<meta property="og:title" content="">
+		<meta name="description" content="">
+		<meta property="og:description" content="">
+		<meta name="author" content="">
+		<meta property="og:image" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body style="height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0;" onload="load()">
+		<video autoplay muted loop id="backgroundVideo" style="position: absolute; z-index: -1; visibility: hidden;">
+			<source src="fannivideo.mp4" type="video/mp4">
+		</video>
+		<img src="overlay.png" id="overlayImage" style="display:none;">
+		<img src="sprite.png" id="spriteImage" style="display:none;">
+		<canvas id="canvasElement" width="720" height="720" max-width="100vw" style="cursor: none; max-width: 100vw;"></canvas>
+		<script>
+			const canvas = document.getElementById("canvasElement");
+			const ctx = canvas.getContext("2d");
+			const overlayimg = document.getElementById("overlayImage");
+			const bgvideo = document.getElementById('backgroundVideo');
+			const sprite = document.getElementById('spriteImage');
+			let canvasX = 0;
+			let canvasY = 0;
+			let mouseX = 300;
+			let mouseY = 300;
+			let cursorFrame= 0;
+			const cursorFrameMax = 4;
+			const frameSize = 120;
+			let cursorFpsCounter = 0;
+
+			function getRandomInt(max) {
+				return Math.floor(Math.random() * Math.floor(max));
+			}
+
+			function load() {
+				setup();
+				update();
+			}
+
+			function setup() {
+				getCanvasPosition();
+			}
+
+			function update() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.drawImage(bgvideo, 0, 0, canvas.width, canvas.height)
+				ctx.drawImage(sprite, cursorFrame*frameSize, 0, frameSize, frameSize, mouseX, mouseY, frameSize, frameSize);
+				ctx.drawImage(overlayimg,0,0);
+
+				requestAnimationFrame(update);
+			}
+
+			function getCanvasPosition() {
+				canvasX = canvas.offsetLeft + canvas.clientLeft;
+				canvasY = canvas.offsetTop + canvas.clientTop;
+			}
+
+			function onMouseMove(e) {
+				mouseX = e.clientX - canvasX;
+				mouseY = e.clientY - canvasY;
+
+				cursorFpsCounter++;
+				if(cursorFpsCounter % 9 === 0) {
+					cursorFrame++;
+				}
+				if (cursorFrame > cursorFrameMax){
+					cursorFrame = 0;
+				}
+			}
+
+			window.addEventListener('resize', getCanvasPosition);
+			canvas.addEventListener("mousemove", onMouseMove, false);
+		</script>
+	</body>
+</html>

@@ -53,6 +53,7 @@ function onCanvasClick(e) {
 
 	if(mouseOnScrubber) {
 		let progress = (clickX - 20) / 680;
+		console.log(progress);
 		music.currentTime = music.duration * progress;
 	}
 }
