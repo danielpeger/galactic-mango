@@ -22,3 +22,8 @@ export function drawScrubberDot(x, y) {
 	canvasContext.fillStyle = 'red';
 	canvasContext.fill();
 }
+
+export function drawRectangle(progress, x, y) {
+	canvasContext.fillStyle = `rgba(255, 255, 255, ${progress})`;
+	canvasContext.fillRect(x, y, 25, 25);
+}

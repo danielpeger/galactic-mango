@@ -1,6 +1,6 @@
 import getCanvasPosition from './getCanvasPosition.js'
 import togglePlay from './togglePlay.js';
-import drawScrubber, { drawScrubberDot } from './drawScrubber.js';
+import drawScrubber, { drawScrubberDot, drawRectangle } from './drawScrubber.js';
 import {Delaunay} from "https://cdn.skypack.dev/d3-delaunay@6";
 import samples from './samplePath/samples.js';
 import samplesWithLength from './samplePath/samplesWithLength.js';
@@ -21,6 +21,28 @@ function update() {
 		canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
 		drawScrubber(pathLength);
 		drawScrubberDot(closestX, closestY);
+
+		const rectangles=[
+			{
+				x: 560,
+				y: 460,
+				start: 47,
+				end: 48
+			},
+			{
+				x: 520,
+				y: 470,
+				start: 48.5,
+				end: 49.5
+			}
+		]
+
+		for (let i = 0; i < rectangles.length; i++) {
+			const rectDuration = rectangles[i].start - rectangles[i].end;
+			const rectCurrent = Math.min(Math.max((music.currentTime), rectangles[i].start), rectangles[i].end);
+			const rectProgress = Math.abs((rectCurrent - rectangles[i].start) / rectDuration);
+			drawRectangle(rectProgress, rectangles[i].x, rectangles[i].y);
+		}
 	}
 	requestAnimationFrame(update);
 }
