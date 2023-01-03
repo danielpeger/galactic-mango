@@ -3,13 +3,19 @@ export default function drawScrubber(length) {
 	canvasContext.lineWidth = 6;
 	canvasContext.setLineDash([length]);
 
+	canvasContext.beginPath();
+	canvasContext.moveTo(0, 0);
 	canvasContext.strokeStyle = "rgba(255, 255, 255, 1)";
 	canvasContext.lineDashOffset = length - (progress * length);
-	canvasContext.stroke(scrubberPath);
+	canvasContext.lineTo(0, 3000);
+	canvasContext.stroke();
 
+	canvasContext.beginPath();
+	canvasContext.moveTo(0, 0);
 	canvasContext.strokeStyle = "rgba(255, 255, 255, 0.35)";
 	canvasContext.lineDashOffset = 0;
-	canvasContext.stroke(scrubberPath);
+	canvasContext.lineTo(0, 3000);
+	canvasContext.stroke();
 
 	//canvasContext.translate(-1000,-700);
 }
